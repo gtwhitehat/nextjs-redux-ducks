@@ -4,12 +4,12 @@ import { pendingReducer, fulfilledReducer, rejectedReducer } from '../events'
 
 let FETCH_CONTENT: string = 'fe/FETCH_CONTENT'
 
-interface User {
+interface Content {
   response: object,
   isPending?: boolean
 }
 
-const initialState: User = {
+const initialState: Content = {
   response: {},
   isPending: false
 };
