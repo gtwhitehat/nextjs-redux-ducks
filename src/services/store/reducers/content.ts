@@ -1,7 +1,8 @@
 import typeToReducer from 'type-to-reducer'
+import { fetchContentRequest } from '../../apis/request'
 import { pendingReducer, fulfilledReducer, rejectedReducer } from '../events'
 
-let SET_USERNAME: string = 'fe/SET_USERNAME'
+let FETCH_CONTENT: string = 'fe/FETCH_CONTENT'
 
 interface User {
   response: object,
@@ -15,16 +16,15 @@ const initialState: User = {
 
 // reducers
 export default typeToReducer({
-  [SET_USERNAME]: {
+  [FETCH_CONTENT]: {
     PENDING: pendingReducer(),
     FULFILLED: fulfilledReducer(),
     REJECTED: rejectedReducer()
   },
 }, initialState)
 
-
 // Actions
-export const setUserAction = ({ username = '' }) => (dispatch: any) => dispatch({
-  type: SET_USERNAME,
-  payload: Promise.resolve({ username }),
+export const fetchContentAction = () => (dispatch: any) => dispatch({
+  type: FETCH_CONTENT,
+  payload: fetchContentRequest(),
 })

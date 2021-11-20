@@ -3,7 +3,8 @@ import { applyMiddleware, createStore, combineReducers, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import promiseMiddleware from 'redux-promise-middleware'
 
-import { testReducer, fetchContentReducer } from './reducers/testReducer'
+import testReducer from './reducers/testReducer'
+import contentReducer from './reducers/content'
 
 let middleware: any = [
   thunkMiddleware,
@@ -13,7 +14,7 @@ let middleware: any = [
 // combine reducer
 const reducers = combineReducers({
   user: testReducer,
-  content: fetchContentReducer
+  content: contentReducer
 })
 
 export const store = createStore(

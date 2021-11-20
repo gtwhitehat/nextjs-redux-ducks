@@ -2,11 +2,14 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useState, useEffect } from 'react'
-
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser, fetchContentAction } from '../services/store/reducers/testReducer'
-import { getUser, getContent } from '../services/store/selectors/testReducer'
+
+// reduducer
+import { setUserAction } from '../services/store/reducers/testReducer'
+import { fetchContentAction } from '../services/store/reducers/content'
+// selectors
+import { getUser } from '../services/store/selectors/testReducer'
+import { getContent } from '../services/store/selectors/content'
 
 const Home: NextPage = () => {
 
@@ -27,7 +30,7 @@ const Home: NextPage = () => {
           Username: {username}
         </h1>
 
-        <button onClick={() => dispatch(setUser({ username: `${Math.random()}`}))}>Click</button>
+        <button onClick={() => dispatch(setUserAction({ username: `${Math.random()}`}))}>Click</button>
         <button onClick={() => dispatch(fetchContentAction())}>Get Content</button>
 
         <div className={styles.grid}>
