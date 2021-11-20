@@ -8,13 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser, fetchContentAction } from '../services/store/reducers/testReducer'
 import { getUser, getContent } from '../services/store/selectors/testReducer'
 
-const useFetching: any = (action: any) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(action())
-  })
-}
-
 const Home: NextPage = () => {
 
   const dispatch = useDispatch();
