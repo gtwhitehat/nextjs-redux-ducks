@@ -8,8 +8,8 @@ import { setUser, fetchContentAction } from '../services/store/reducers/testRedu
 import { getUser, getContent } from '../services/store/selectors/testReducer'
 
 const Home: NextPage = () => {
-  const { response: { username = '' } = {}, status = null } = useSelector(getUser);
-  const { contents = [], status: statusContent } = useSelector(getContent);
+  const { response: { username = '' } = {} } = useSelector(getUser);
+  const { contents = [], isPending } = useSelector(getContent);
   const dispatch = useDispatch();
   return (
     <div className={styles.container}>
@@ -23,16 +23,13 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Username: {username}
         </h1>
-        <h2>
-        status:: {status}
-        </h2>
 
         <button onClick={() => dispatch(setUser({ username: `${Math.random()}`}))}>Click</button>
         <button onClick={() => dispatch(fetchContentAction())}>Get Content</button>
 
         <div className={styles.grid}>
           {
-            !statusContent && contents.length > 0 && contents.map((item: any, k: number) => (
+            !isPending && contents.length > 0 && contents.map((item: any, k: number) => (
               <div className={styles.card} key={k}>
                 <h2>{item.name} &rarr;</h2>
                 <p>{item.body}</p>

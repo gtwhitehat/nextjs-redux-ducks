@@ -8,24 +8,24 @@ let FETCH_CONTENT: string = 'fe/FETCH_CONTENT'
 
 interface User {
   response: object,
-  status?: boolean
+  isPending?: boolean
 }
 
 const initialState = {};
 
 // reducers
 const pendingReducer: any = () => (prevState: any): object => ({
-  status: true,
+  isPending: true,
   response: prevState.data,
 })
 
 const fulfilledReducer: any = () => (_: any, { payload }: any): object => ({
-  status: false,
+  isPending: false,
   response: payload,
 })
 
 const rejectedReducer: any = () => (prevState: any, { payload = {} }): object => ({
-  status: false,
+  isPending: false,
   response: prevState.data,
   errorMessage: payload,
 })
