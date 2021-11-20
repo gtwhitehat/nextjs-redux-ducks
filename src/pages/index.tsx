@@ -2,15 +2,25 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useState, useEffect } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, fetchContentAction } from '../services/store/reducers/testReducer'
 import { getUser, getContent } from '../services/store/selectors/testReducer'
 
-const Home: NextPage = () => {
-  const { response: { username = '' } = {} } = useSelector(getUser);
-  const { contents = [], isPending } = useSelector(getContent);
+const useFetching: any = (action: any) => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(action())
+  })
+}
+
+const Home: NextPage = () => {
+
+  const dispatch = useDispatch();
+  const { response: { username = '' } = {} } = useSelector(getUser) || {};
+  const { isPending = false, contents = [] } = useSelector(getContent) || {};
+
   return (
     <div className={styles.container}>
       <Head>
@@ -29,7 +39,7 @@ const Home: NextPage = () => {
 
         <div className={styles.grid}>
           {
-            !isPending && contents.length > 0 && contents.map((item: any, k: number) => (
+            !isPending && contents.length > 0 && contents?.map((item: any, k: number) => (
               <div className={styles.card} key={k}>
                 <h2>{item.name} &rarr;</h2>
                 <p>{item.body}</p>
