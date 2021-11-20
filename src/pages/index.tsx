@@ -4,11 +4,12 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../services/store/reducers/testReducer'
-import { getUser } from '../services/store/selectors/testReducer'
+import { setUser, fetchContentAction } from '../services/store/reducers/testReducer'
+import { getUser, getContent } from '../services/store/selectors/testReducer'
 
 const Home: NextPage = () => {
-  const { user: { response: { username = '' } = {}, status = null }  = {} } = useSelector(getUser);
+  const { response: { username = '' } = {}, status = null } = useSelector(getUser);
+  const { contents = [], status: statusContent } = useSelector(getContent);
   const dispatch = useDispatch();
   return (
     <div className={styles.container}>
@@ -27,40 +28,17 @@ const Home: NextPage = () => {
         </h2>
 
         <button onClick={() => dispatch(setUser({ username: `${Math.random()}`}))}>Click</button>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
+        <button onClick={() => dispatch(fetchContentAction())}>Get Content</button>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {
+            !statusContent && contents.length > 0 && contents.map((item: any, k: number) => (
+              <div className={styles.card} key={k}>
+                <h2>{item.name} &rarr;</h2>
+                <p>{item.body}</p>
+              </div>
+            ))
+          }
         </div>
       </main>
 

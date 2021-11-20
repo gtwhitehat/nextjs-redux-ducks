@@ -1,5 +1,6 @@
 import typeToReducer from 'type-to-reducer'
 import { combineReducers } from 'redux'
+import { fetchContentRequest } from '../../apis/request'
 
 
 let SET_USERNAME: string = 'fe/SET_USERNAME'
@@ -50,6 +51,11 @@ const fetchContentReducer = typeToReducer({
 export const setUser = ({ username = '' }) => (dispatch: any) => dispatch({
   type: SET_USERNAME,
   payload: Promise.resolve({ username }),
+})
+
+export const fetchContentAction = () => (dispatch: any) => dispatch({
+  type: FETCH_CONTENT,
+  payload: fetchContentRequest(),
 })
 
 
