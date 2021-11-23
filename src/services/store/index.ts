@@ -11,6 +11,16 @@ let middleware: any = [
   promiseMiddleware
 ]
 
+const composeEnhancers =
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+  }) : compose;
+
+const enhancer = composeEnhancers(
+  applyMiddleware(...middleware)
+);
+
 // combine reducer
 const reducers = combineReducers({
   user: testReducer,
@@ -19,5 +29,5 @@ const reducers = combineReducers({
 
 export const store = createStore(
   reducers,
-  applyMiddleware(...middleware)
+  enhancer
 )
